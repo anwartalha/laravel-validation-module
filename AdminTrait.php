@@ -4,8 +4,6 @@ namespace App\Http\Traits;
 
 use App\Admin;
 use App\Http\Traits\HelperTrait;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 trait AdminTrait
 {
@@ -28,15 +26,5 @@ trait AdminTrait
             return $validated;
         endif;
         $admin->name = $validated['name'];
-        if (!empty($validated['password'])) :
-            $admin->password = Hash::make($validated['password']);
-        endif;
-        DB::beginTransaction();
-        if ($admin->save()) :
-            DB::commit();
-            return $this->jsonResponse('Profile Edited Successfully.', 'success');
-        endif;
-        DB::rollback();
-        return $this->jsonResponse();
     }
 }

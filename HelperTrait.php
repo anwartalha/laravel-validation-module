@@ -47,45 +47,4 @@ trait HelperTrait
         endif;
         return $validator->validated();
     }
-
-    public function jsonResponse($msg = null, $type = null, $reload = false)
-    {
-        if ($msg == null && $type == null) :
-            return response()->json([
-                'msg' => [
-                    'msg' => 'Something went wrong.',
-                    'type' => 'error'
-                ]
-            ]);
-        endif;
-        if (is_array($msg)) :
-            return response()->json($msg);
-        endif;
-        if ($reload) :
-            return response()->json([
-                'msg' => [
-                    'msg' => $msg,
-                    'type' => $type,
-                    'reload' => true
-                ]
-            ]);
-        endif;
-        return response()->json([
-            'msg' => [
-                'msg' => $msg,
-                'type' => $type
-            ]
-        ]);
-    }
-
-    public function simpleResponse($msg = null, $type = null)
-    {
-        if ($msg != null && $type != null) :
-            return back()->with($type, $msg);
-        endif;
-        if (is_array($msg)) :
-            return back()->with($msg);
-        endif;
-        return back()->with(['error' => 'Something Went Wrong.']);
-    }
 }
